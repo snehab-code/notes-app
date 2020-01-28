@@ -19,7 +19,7 @@ import CategoryAdd from './components/Category/CategoryAdd';
 import 'typeface-roboto'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import logo from './note.png'
+// import logo from './note.png'
 import './App.css'
 import Button from '@material-ui/core/Button'
 

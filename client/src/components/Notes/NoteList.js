@@ -59,7 +59,7 @@ class NotesList extends React.Component{
                     {
                         this.state.notes.map(note => {
                             return (
-                                <Note key = {note._id} {...note} position={} />
+                                <Note key = {note._id} {...note}/>
                             )
                         })
                     }
