@@ -25,6 +25,6 @@ app.get('/', (req,res) => {
 })
 
 app.listen(port, () => {
-    console.log('listening on 3015')
+    console.log('listening on port::::::',port)
 })
 
