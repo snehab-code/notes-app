@@ -22,6 +22,10 @@ const noteSchema = new Schema (
         },
         photoPath: {
             type: String
+        },
+        user: {
+            type: Schema.Types.ObjectId,
+            required: true
         }
     }
 )
