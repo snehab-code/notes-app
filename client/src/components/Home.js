@@ -17,16 +17,16 @@ class Home extends React.Component {
 
     render() {
         return (
-            <div style={{display:"flex", alignItems: "center", justifyContent:"center", width:"100%", height: "70%", minHeight:"300px", maxWidth:800}}>
+            <div style={{display:"flex", justifyContent:"center", alignItems:"center", width:"100%", height: "100%", minHeight:"300px", maxWidth:900, maxHeight:480}}>
                 <div style={{
-                    backgroundImage: "linear-gradient(to right, #f5d382, #f7a1b1)",
-                    padding: 3,
+                    backgroundImage: "linear-gradient(to right, #fcf3de, #fcdee4)",
+                    padding: 2,
                     borderRadius:12,
                     height:"100%",
                     width:"62%",
                 }}>
-                    <div style={{borderRadius:10, height: "100%", padding:0, margin:0,  width:"100%", background:"white",  backgroundPosition:"center", display:"flex",  alignItems: "stretch", justifyContent:"center"}}>
-                        <div style={{height:"100%", width:"100%", borderTopLeftRadius:10, borderBottomLeftRadius: 10, overflow:"hidden", backgroundImage: "url(https://source.unsplash.com/collection/9507219/640x480)", backgroundPosition:"center"}}></div>
+                    <div style={{borderRadius:10, height: "100%", padding:0, margin:0,  width:"100%", background:"white",  backgroundPosition:"center", display:"flex",  alignItems: "stretch", justifyContent:"center"}} ref={(divElement) => this.divElement = divElement}>
+                        <div style={{height:"100%", width:"100%", borderTopLeftRadius:10, borderBottomLeftRadius: 10, overflow:"hidden", backgroundImage: `url(https://source.unsplash.com/collection/9507219/300x500)`, backgroundPosition:"center center"}}></div>
                         <div style={{display:"flex", flexDirection: "column",alignItems:"center", justifyContent: "flex-end", width:"100%", minWidth:"200px"}}>
                         <form onSubmit={this.handleSubmit} style={{flexGrow:1, alignSelf:"stretch",display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center"}}>
                             
@@ -38,7 +38,7 @@ class Home extends React.Component {
                             
                         </form>
                         <span style={{fontSize:"0.9em", color:"#486175"}}><Link to="">Sign up</Link> | <Link to="">Forgot Password?</Link></span>
-                        </div>
+                        </div>                       
                     </div>
                 </div>
             </div>
