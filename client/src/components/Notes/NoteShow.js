@@ -13,7 +13,7 @@ class NoteShow extends React.Component{
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:3015/notes/${this.props.match.params.id}`)
+        axios.get(`/notes/${this.props.match.params.id}`)
             .then(response => {
                 const note = response.data
                 this.setState({note})
@@ -40,7 +40,7 @@ class NoteShow extends React.Component{
             formData.photoPath = note.photoPath
         }
         console.log(formData)
-        axios.post(`http://localhost:3015/notes/`, formData)
+        axios.post(`/notes/`, formData)
             .then(() => {
                 this.props.history.push('/notes')
             })

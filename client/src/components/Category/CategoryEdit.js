@@ -6,7 +6,7 @@ class CategoryEdit extends React.Component {
 
     handleSubmit = (formData) => {
         const id = this.props.id
-        axios.put(`http://localhost:3015/categories/${id}`, formData) 
+        axios.put(`/categories/${id}`, formData) 
             .then(response => {
                 this.props.cancel(response.data)
             })

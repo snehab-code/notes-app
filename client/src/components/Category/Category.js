@@ -13,7 +13,7 @@ class CategoryList extends React.Component{
     }
 
     componentDidMount() {
-        axios.get("http://localhost:3015/categories")
+        axios.get("/categories")
             .then(response => {
                 const categories = response.data
                 this.setState({categories})
@@ -21,7 +21,7 @@ class CategoryList extends React.Component{
     }
 
     handleRemove = (id) => {
-        axios.delete(`http://localhost:3015/categories/${id}`)
+        axios.delete(`/categories/${id}`)
             .then((response) => {
                 const category = response.data
                 this.setState(prevState => {

@@ -12,7 +12,7 @@ class NoteEdit extends React.Component {
 
     componentDidMount() {
         const id = this.props.match.params.id
-        axios.get(`http://localhost:3015/notes/${id}`)
+        axios.get(`/notes/${id}`)
             .then(response => {
                 const note = response.data
                 this.setState({note})
@@ -22,7 +22,7 @@ class NoteEdit extends React.Component {
     handleSubmit = (formData) => {
         console.log(formData)
         const id = this.props.match.params.id
-        axios.put(`http://localhost:3015/notes/${id}`, formData)
+        axios.put(`/notes/${id}`, formData)
             .then((response) => {
                 console.log(response.data)
                 this.props.history.push('/notes')

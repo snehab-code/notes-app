@@ -16,7 +16,7 @@ class NotesList extends React.Component{
 
     componentDidMount() {
         window.addEventListener('resize', this.updateWindowDimensions)
-        axios.get("http://localhost:3015/notes")
+        axios.get("/notes")
             .then(response => {
                 const notes = response.data
                 this.setState({notes})
@@ -31,7 +31,7 @@ class NotesList extends React.Component{
     }
 
     handleRemove = (id) => {
-        axios.delete(`http://localhost:3015/notes/${id}`)
+        axios.delete(`/notes/${id}`)
             .then(response => {
                 this.setState(prevState => {
                     const notes = prevState.notes.filter(note => note._id !== id)

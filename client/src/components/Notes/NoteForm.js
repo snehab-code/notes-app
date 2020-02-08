@@ -15,7 +15,7 @@ class NoteForm extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:3015/categories')
+        axios.get('/categories')
             .then(response => {
                 this.setState({categories: response.data})
             })

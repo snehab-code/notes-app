@@ -11,7 +11,7 @@ class NoteAdd extends React.Component {
     }
 
     handleSubmit = (formData) => {
-        axios.post('http://localhost:3015/notes', formData)
+        axios.post('/notes', formData)
             .then(() => {
                 this.props.history.push('/notes')
             })

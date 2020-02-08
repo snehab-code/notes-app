@@ -11,7 +11,7 @@ class CategoryAdd extends React.Component{
     }
 
     handleSubmit = (formData) => {
-        axios.post('http://localhost:3015/categories', formData)
+        axios.post('/categories', formData)
             .then(response => {
                 const category = response.data
                 this.setState({message: `Added ${category.name}`})
