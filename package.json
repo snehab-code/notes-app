@@ -12,10 +12,10 @@
     "heroku-prebuild": "npm install",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
-"engines": {
-    "node": "^10.3.0", 
-    "npm": "^6.8.0" 
- },
+  "engines": {
+      "node": "v12.14.1", 
+      "npm": "^6.13.4" 
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
