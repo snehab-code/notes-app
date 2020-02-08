@@ -5,18 +5,19 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev-server": "nodemon index.js",
     "dev": "concurrently \"nodemon index.js\" \"cd client && npm start\"",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "cd client && npm run build",
-    "heroku-prebuild": "npm install",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "build": "cd client/ && npm install && npm run build"
   },
   "engines": {
       "node": "v12.14.1", 
       "npm": "^6.13.4" 
   },
-  "keywords": [],
+  "keywords": [
+    "node",
+    "heroku",
+    "create-react-app",
+    "react"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
