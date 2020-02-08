@@ -4,7 +4,7 @@ const setupDB = require('./config/database')
 const router = require('./config/routes')
 const path = require('path')
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3015
 
 app.use(express.json())
 app.use(cors())
