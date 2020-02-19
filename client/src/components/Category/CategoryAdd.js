@@ -1,6 +1,7 @@
 import React from 'react'
 import CategoryForm from './CategoryForm'
-import axios from 'axios'
+import {connect} from 'react-redux'
+import {startPostCategory} from '../../actions/categories'
 
 class CategoryAdd extends React.Component{
     constructor() {
@@ -11,18 +12,10 @@ class CategoryAdd extends React.Component{
     }
 
     handleSubmit = (formData) => {
-        axios.post('/categories', formData)
-            .then(response => {
-                const category = response.data
-                this.setState({message: `Added ${category.name}`})
-                setTimeout(()=> {
-                    this.props.history.push('/categories')
-                }, 1500)
-            })
+        this.props.dispatch(startPostCategory(formData))
     }
 
     render() {
-        console.log(this.props)
         return (
             <div>
                 <h1> Add a category </h1>
@@ -33,4 +26,6 @@ class CategoryAdd extends React.Component{
     }
 }
 
-export default CategoryAdd
+export default connect()(CategoryAdd)
+
+    

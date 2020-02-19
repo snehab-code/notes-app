@@ -4,7 +4,6 @@ const CONNECTION_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/not
 
 const setupDB = () => {
     mongoose.connect(CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true})
-    // seems to work without the 27017
     .then(()=> {
         console.log('connect to db')
     })

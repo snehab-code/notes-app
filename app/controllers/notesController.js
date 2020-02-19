@@ -1,4 +1,5 @@
 const Note = require('../models/note')
+const Category = require('../models/category')
 const fs = require('fs')
 
 module.exports.list = (req, res) => {
@@ -13,7 +14,7 @@ module.exports.list = (req, res) => {
 
 module.exports.show = (req, res) => {
     const id = req.params.id
-    Note.findOne({_id: id, user: req.user._id}).populate('category')
+    Note.findOne({_id: id, user: req.user._id}).populate('category', ['_id', 'name'])
         .then(note =>  {
             if (note) {
                 res.json(note)
@@ -36,7 +37,18 @@ module.exports.create = (req, res) => {
         note.user = req.user._id
         note.save()
         .then((note) => {
-            res.json(note)
+            // make this a post hook eventually
+            Category.findOne({_id: note.category, user: req.user._id}, '_id name')
+                .then(category => {
+                    note.category = {
+                        _id: category._id,
+                        name: category.name
+                    }
+                    res.json(note)
+                })
+                .catch(err => {
+                    res.json(err)
+                })
         })
         .catch((err) => {
             res.json(err)
@@ -61,16 +73,13 @@ module.exports.destroy = (req, res) => {
 
 module.exports.update = (req,res) => {
     const body = req.body
-    console.log('body1', body)
     const id = req.params.id
     if (req.file) {
         const file = req.file
         body.photoPath = `/${file.destination}/${file.filename}`
-        console.log('body', body)
     }
-    Note.findOneAndUpdate({_id: id, user: req.user._id}, body, {new: true, runValidators: true})
+    Note.findOneAndUpdate({_id: id, user: req.user._id}, body, {new: true, runValidators: true}).populate('category', ['_id', 'name'])
         .then((note) => {
-            console.log('note', note)
             if(note) {
                 res.json(note)
             } else {

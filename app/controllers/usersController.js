@@ -26,12 +26,17 @@ module.exports.login = (req, res) => {
             return user.generateToken()
         })
         .then(token => {
-            res.setHeader('x-auth', token).send({})
+            // res.setHeader('x-auth', token).send({})
+            res.send(token)
         })
         .catch(err => {
             res.send(err)
         })
 
+}
+
+module.exports.checkLoginStatus = (req, res) => {
+    if (req.user) res.send({notice: 'valid user'})
 }
 
 
@@ -52,6 +57,6 @@ module.exports.logoutAll = (req, res) => {
     const {user, token} = req 
     User.findByIdAndUpdate(user._id, { $set: {tokens: []}}, {new: true})
         .then(user => {
-            res.send(user)
+            res.send({notice: 'succesfully logged out of all devices'})
         })
 }

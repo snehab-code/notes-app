@@ -1,24 +1,15 @@
 import React from 'react'
-import axios from 'axios'
+import {connect} from 'react-redux'
 
 class NoteForm extends React.Component {
     constructor(props) {
         super(props)
-        console.log('cons', props)
         this.state = {
             title: this.props.title ? this.props.title : '',
             description: this.props.description ? this.props.description : '',
             category: this.props.category ? this.props.category._id : '',
-            categories: [],
             image: null 
         }
-    }
-
-    componentDidMount() {
-        axios.get('/categories')
-            .then(response => {
-                this.setState({categories: response.data})
-            })
     }
 
     handleSubmit = (e) => {
@@ -61,7 +52,7 @@ class NoteForm extends React.Component {
                 <select id="category" value={this.state.category} onChange={this.handleChange}>
                     <option></option>
                     {
-                        this.state.categories.map(category => {
+                        this.props.categories.map(category => {
                             return <option key={category._id} value={category._id}>{category.name}</option>
                         })
                     }
@@ -76,4 +67,11 @@ class NoteForm extends React.Component {
     }
 }
 
-export default NoteForm
+const mapStateToProps = (state, props) => {
+    return {
+        // note: state.notes.find(note => note._id == props.match.params.id),
+        categories: state.categories
+    }
+}
+
+export default connect(mapStateToProps)(NoteForm)

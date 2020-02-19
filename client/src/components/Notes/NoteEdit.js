@@ -1,43 +1,29 @@
 import React from 'react'
-import axios from 'axios'
+import {connect} from 'react-redux'
 import NoteForm from './NoteForm'
+import { startPutNote } from '../../actions/notes'
 
-class NoteEdit extends React.Component {
-    constructor() {
-        super()
-        this.state = {
-            note: {}
-        }
+// class NoteEdit extends React.Component {
+function NoteEdit(props) {
+    const handleSubmit = (formData) => {
+        const id = props.match.params.id
+        const history = props.history
+        props.dispatch(startPutNote(id, formData, history))
     }
+ 
+    return (
+        <div>
+            <h1>Edit Note</h1>
+            {props.note && <NoteForm {...props.note} handleSubmit = {handleSubmit} />}
+        </div>
+    )
 
-    componentDidMount() {
-        const id = this.props.match.params.id
-        axios.get(`/notes/${id}`)
-            .then(response => {
-                const note = response.data
-                this.setState({note})
-            })
-    }
+}
 
-    handleSubmit = (formData) => {
-        console.log(formData)
-        const id = this.props.match.params.id
-        axios.put(`/notes/${id}`, formData)
-            .then((response) => {
-                console.log(response.data)
-                this.props.history.push('/notes')
-            })
-            .catch(err => console.log(err))
-    }
-
-    render() {
-        return (
-            <div>
-                <h1>Edit Note</h1>
-                {this.state.note.title && <NoteForm {...this.state.note} handleSubmit = {this.handleSubmit} />}
-            </div>
-        )
+const mapStateToProps = (state, props) => {
+    return {
+        note: state.notes.find(note => note._id == props.match.params.id)
     }
 }
 
-export default NoteEdit
+export default connect(mapStateToProps)(NoteEdit)

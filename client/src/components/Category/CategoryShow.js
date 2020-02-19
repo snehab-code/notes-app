@@ -1,37 +1,28 @@
 import React from 'react'
-import axios from 'axios'
+import {connect} from 'react-redux'
+import NoteList from '../Notes/NoteList'
 
-class CategoryShow extends React.Component{
-    constructor() {
-        super()
-        this.state = {
-            category: {}
-        }
-    }
+function CategoryShow(props) {
+    return (
+        <div>
+            {
+                props.category ? 
+                <div style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+                    {
+                        <h1>{props.category.name}</h1>
+                    }
+                    <NoteList category={props.match.params.id} />
+                </div>
+                : <br/>
+            }
+        </div>
+    )
+}
 
-    componentDidMount() {
-        axios.get(`/categories/${this.props.match.params.id}`)
-            .then(response => {
-                const category = response.data
-                this.setState({category})
-            })
-    }
-
-    render() {
-        return (
-            <div>
-                {
-                    this.state.category ? 
-                    <div>
-                        {
-                           <h1> {this.state.category.name}</h1>
-                        }
-                    </div>
-                    : <br/>
-                }
-            </div>
-        )
+const mapStateToProps = (state, props) => {
+    return {
+        category: state.categories.find(category => category._id == props.match.params.id)
     }
 }
 
-export default CategoryShow
+export default connect(mapStateToProps)(CategoryShow)

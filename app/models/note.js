@@ -17,8 +17,8 @@ const noteSchema = new Schema (
         },
         category: {
             type: Schema.Types.ObjectId,
-            ref: 'Category',
-            required: true
+            ref: 'Category'
+            // required: true
         },
         photoPath: {
             type: String
@@ -26,6 +26,10 @@ const noteSchema = new Schema (
         user: {
             type: Schema.Types.ObjectId,
             required: true
+        },
+        isPinned: {
+            type: Boolean,
+            default: false
         }
     }
 )

@@ -13,10 +13,11 @@ setupDB()
 
 app.use('/uploads', express.static('uploads'))
 app.use('/', router)
-app.use(express.static(path.join(__dirname,"client/build"))) 
-app.get("*",(req,res) => { 
-    res.sendFile(path.join(__dirname + "/client/build/index.html")) 
-}) 
+
+// app.use(express.static(path.join(__dirname,"client/build"))) 
+// app.get("*",(req,res) => { 
+//     res.sendFile(path.join(__dirname + "/client/build/index.html")) 
+// }) 
 
 app.get('/', (req,res) => {
     res.json({

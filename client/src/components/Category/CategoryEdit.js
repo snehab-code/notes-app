@@ -1,24 +1,20 @@
 import React from 'react'
 import CategoryForm from './CategoryForm'
-import axios from 'axios'
+import {connect} from 'react-redux'
+import {startPutCategory} from '../../actions/categories'
 
-class CategoryEdit extends React.Component {
+function CategoryEdit(props) {
 
-    handleSubmit = (formData) => {
+    const handleSubmit = (formData) => {
         const id = this.props.id
-        axios.put(`/categories/${id}`, formData) 
-            .then(response => {
-                this.props.cancel(response.data)
-            })
+        props.dispatch(startPutCategory(id, formData))
     }
 
-    render() {
-        return (
-            <div>
-                <CategoryForm name={this.props.name} handleSubmit={this.handleSubmit} /> <button onClick={this.props.cancel}>cancel</button>
-            </div>
-        )
-    }
+    return (
+        <div>
+            <CategoryForm name={props.name} handleSubmit={handleSubmit} /> <button onClick={this.props.cancel}>cancel</button>
+        </div>
+    )
 }
 
-export default CategoryEdit
+export default connect()(CategoryEdit)

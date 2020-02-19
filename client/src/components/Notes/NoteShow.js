@@ -1,36 +1,12 @@
 import React from 'react'
-import axios from 'axios'
+import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {startPostNote} from '../../actions/notes'
 
-class NoteShow extends React.Component{
-    constructor() {
-        super()
-        this.state = {
-            note: {},
-            imageURL: '',
-            message: ''
-        }
-    }
+function NoteShow(props){
 
-    componentDidMount() {
-        axios.get(`/notes/${this.props.match.params.id}`)
-            .then(response => {
-                const note = response.data
-                this.setState({note})
-            })
-    }
-
-    handleImage = () => {
-        const arrayBuffer = this.state.note.image.data
-        console.log(arrayBuffer)
-        let imageTest = new Uint8Array(arrayBuffer)
-        const blob = new Blob([imageTest], {type: "image/jpeg"})
-        const imageURL = URL.createObjectURL(blob)
-        return imageURL
-    }
-    
-    handleDuplicate = () => {
-        const note = this.state.note
+    const handleDuplicate = () => {
+        const note = props.note
         const formData = { 
             title: note.title, 
             category: note.category, 
@@ -39,38 +15,35 @@ class NoteShow extends React.Component{
         if (note.photoPath) {
             formData.photoPath = note.photoPath
         }
-        console.log(formData)
-        axios.post(`/notes/`, formData)
-            .then(() => {
-                this.props.history.push('/notes')
-            })
-            .catch(err => {
-                alert(err)
-            })
+        props.dispatch(startPostNote(formData))
     }
 
-    render() {
-        console.log(this.state.note)
-        return (
-            <div>
-                {
-                    this.state.note.title ? 
-                    <div><h1>{this.state.note.title}</h1>
-                    <span>{this.state.note.description}</span><br/>
-                    
-                    {this.state.note.image ? <img src={this.handleImage()} style={{width:400}}/> : <br/>}
-                    
-                    <button onClick = {this.handleDuplicate}>Duplicate</button>
+    return (
+        <div>
+            {
+                props.note ? 
+                <div><h1>{props.note.title}</h1>
+                <span>{props.note.description}</span><br/>
+                
+                {props.note.photoPath ? <img src={`http://localhost:3015${props.note.photoPath}`} alt="note" style={{width:400}}/> : <br/>}
 
-                    </div>
-                    : <br/>
-                }
+                <button onClick = {handleDuplicate}>Duplicate</button>
 
-                <Link to={`/notes/edit/${this.props.match.params.id}`}> Edit </Link>          
+                </div>
+                : <br/>
+            }
 
-            </div>
-        )
+            <Link to={`/notes/edit/${props.match.params.id}`}> Edit </Link>          
+
+        </div>
+    )
+}
+
+
+const mapStateToProps = (state, props) => {
+    return {
+        note: state.notes.find(note => note._id == props.match.params.id)
     }
 }
 
-export default NoteShow
+export default connect(mapStateToProps)(NoteShow)

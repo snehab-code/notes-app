@@ -1,35 +1,18 @@
 import React from 'react'
-import axios from 'axios'
 import {Link} from 'react-router-dom'
 import CategoryEdit from './CategoryEdit'
+import {connect} from 'react-redux'
 
 class CategoryList extends React.Component{
     constructor() {
         super()
         this.state = {
-            categories: [],
             edit: ''
         }
     }
 
-    componentDidMount() {
-        axios.get("/categories")
-            .then(response => {
-                const categories = response.data
-                this.setState({categories})
-            })
-    }
-
     handleRemove = (id) => {
-        axios.delete(`/categories/${id}`)
-            .then((response) => {
-                const category = response.data
-                this.setState(prevState => {
-                    const categories = prevState.categories.filter(categ => categ._id !== category._id)
-                    return {categories}
-                })
-            })
-            .catch(err => console.log(err))
+        console.log(id)
     }
 
     handleEditClick = (edit) => {
@@ -38,7 +21,6 @@ class CategoryList extends React.Component{
     
     handleEditCancel = (data) => {
         if (data.name) {
-            console.log(data)
             this.setState(prevState => {
                 const categories = [...prevState.categories]
                 categories.find(cat => cat._id === data._id).name = data.name
@@ -49,13 +31,13 @@ class CategoryList extends React.Component{
     }
 
     render() {
-        console.log('yes')
         return (
             <div>
-                <h2>Listing Categories - {this.state.categories.length}</h2>
+                <h2>Listing Categories - {this.props.categories.length}</h2>
                 <ul>
+                    <li>Uncategorised</li>
                     {
-                        this.state.categories.map(category => {
+                        this.props.categories.map(category => {
                             return (
                                 this.state.edit !== category._id ?
                                 <li key = {category._id}>
@@ -75,4 +57,10 @@ class CategoryList extends React.Component{
     }
 }
 
-export default CategoryList
+const mapStateToProps = (state) => {
+    return {
+        categories: state.categories
+    }
+}
+
+export default connect(mapStateToProps)(CategoryList)
