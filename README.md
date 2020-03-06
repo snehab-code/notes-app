@@ -1,9 +1,7 @@
 # Notes App
+An elegant, responsive, multiuser note taking application with image uploads, categories, and pinning built on ReactJS with redux, Express, and Node.
 
-A simple note taking app with image uploads and categories built on ReactJS, Express, and Node.
-
-
-# Dependencies and Installation
+# Dependencies
 
 ## Frontend
 
@@ -20,3 +18,5 @@ A simple note taking app with image uploads and categories built on ReactJS, Exp
   3. express
   4. mongoose
   5. multer
+  6. multer-s3
+  7. amazon-sdk
