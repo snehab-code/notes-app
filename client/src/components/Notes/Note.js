@@ -27,6 +27,7 @@ class Note extends React.Component{
     }
 
     onLoad = () => {
+        console.log('load ran')
         const height = this.divElement.clientHeight
         if (height !== this.state.height) {
             this.setState({height})
@@ -49,10 +50,7 @@ class Note extends React.Component{
         this.props.dispatch(startPinNote(id, pinStatus))
     }
 
-    // how to use canvas to get the dominant colour of the image?
-
     render() {
-        console.log(this.state.height)
         return (
         <div className="note" key = {this.props.note._id} style={{margin:10, border:"1px solid #f7e7b2", width:270, borderRadius: 12}} ref={(divElement) => this.divElement = divElement}>
             <div className="noteContent" style={{display:"grid", gridTemplateColumns: "1fr 1 fr 1fr 1fr", gridTemplateTows: "1fr", height:"auto"}}>

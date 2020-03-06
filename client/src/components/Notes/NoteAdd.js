@@ -9,10 +9,10 @@ function NoteAdd (props) {
     }
 
     return (
-        <div>
+        <>
             <h1>Create a Note</h1>
             <NoteForm handleSubmit = {handleSubmit}/>
-        </div>
+        </>
     )
 }
 
