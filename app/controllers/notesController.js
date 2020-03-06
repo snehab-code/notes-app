@@ -28,31 +28,31 @@ module.exports.show = (req, res) => {
 }
 
 module.exports.create = (req, res) => { 
-        const body = req.body
-        if (req.file) {
-            const file = req.file
-            body.photoPath = `/${file.destination}/${file.filename}`
-        }
-        const note = new Note(body)
-        note.user = req.user._id
-        note.save()
-        .then((note) => {
-            // make this a post hook eventually
-            Category.findOne({_id: note.category, user: req.user._id}, '_id name')
-                .then(category => {
-                    note.category = {
-                        _id: category._id,
-                        name: category.name
-                    }
-                    res.json(note)
-                })
-                .catch(err => {
-                    res.json(err)
-                })
-        })
-        .catch((err) => {
-            res.json(err)
-        })
+    const body = req.body
+    if (req.file) {
+        const file = req.file
+        body.photoPath = file.location
+    }
+    const note = new Note(body)
+    note.user = req.user._id
+    note.save()
+    .then((note) => {
+        // make this a post hook eventually
+        Category.findOne({_id: note.category, user: req.user._id}, '_id name')
+            .then(category => {
+                note.category = {
+                    _id: category._id,
+                    name: category.name
+                }
+                res.json(note)
+            })
+            .catch(err => {
+                res.json(err)
+            })
+    })
+    .catch((err) => {
+        res.json(err)
+    })
 }
 
 

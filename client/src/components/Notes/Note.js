@@ -72,7 +72,9 @@ class Note extends React.Component{
                 </div>
 
                 <div style={{gridRowStart: 1, gridColumnStart: 1}}>
-                    {this.props.note.photoPath && <img style={{width:268, borderTopRightRadius:12, borderTopLeftRadius:12}} alt="note" src={`http://localhost:3015${this.props.note.photoPath}`} onLoad = {this.onLoad}/>}
+                    {this.props.note.photoPath && this.props.note.photoPath.includes('uploads/') && <img style={{width:268, borderTopRightRadius:12, borderTopLeftRadius:12}} alt="note" src={`http://localhost:3015${this.props.note.photoPath}`} onLoad = {this.onLoad}/>}
+
+                    {this.props.note.photoPath && !this.props.note.photoPath.includes('uploads/') && <img style={{width:268, borderTopRightRadius:12, borderTopLeftRadius:12}} alt="note" src={`${this.props.note.photoPath}`} onLoad = {this.onLoad}/>}
                 
                     <div style={{padding:15, paddingTop:10}}>
                     <Link to={`/notes/${this.props.note._id}`}><span style={{fontWeight:"bold", fontSize:"1.1em"}}>{this.props.note.title}</span></Link>

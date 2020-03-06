@@ -2,7 +2,7 @@ import Axios from 'axios'
 
 const axios = Axios.create({
     // baseURL: "http://localhost:3015",
-    baseURL: "/api",
+    baseURL: "http://localhost:3015/api",
     headers: {
         "x-auth": localStorage.getItem('authToken')
     }

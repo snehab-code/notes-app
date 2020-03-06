@@ -4,6 +4,7 @@ const notesController = require('../app/controllers/notesController')
 const categoryController = require('../app/controllers/categoriesController')
 const usersController = require('../app/controllers/usersController')
 const upload = require('./multer')
+const aws = require('aws-sdk')
 const authenticateUser = require('../app/middlewares/authenticateUser')
    
 router.post('/api/users/register', usersController.register)
