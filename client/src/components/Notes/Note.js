@@ -52,6 +52,7 @@ class Note extends React.Component{
     // how to use canvas to get the dominant colour of the image?
 
     render() {
+        console.log(this.state.height)
         return (
         <div className="note" key = {this.props.note._id} style={{margin:10, border:"1px solid #f7e7b2", width:270, borderRadius: 12}} ref={(divElement) => this.divElement = divElement}>
             <div className="noteContent" style={{display:"grid", gridTemplateColumns: "1fr 1 fr 1fr 1fr", gridTemplateTows: "1fr", height:"auto"}}>
@@ -72,7 +73,7 @@ class Note extends React.Component{
                 </div>
 
                 <div style={{gridRowStart: 1, gridColumnStart: 1}}>
-                    {this.props.note.photoPath && this.props.note.photoPath.includes('uploads/') && <img style={{width:268, borderTopRightRadius:12, borderTopLeftRadius:12}} alt="note" src={`http://localhost:3015${this.props.note.photoPath}`} onLoad = {this.onLoad}/>}
+                    {/* {this.props.note.photoPath && this.props.note.photoPath.includes('uploads/') && <img style={{width:268, borderTopRightRadius:12, borderTopLeftRadius:12}} alt="note" src={`http://localhost:3015${this.props.note.photoPath}`} onLoad = {this.onLoad}/>} */}
 
                     {this.props.note.photoPath && !this.props.note.photoPath.includes('uploads/') && <img style={{width:268, borderTopRightRadius:12, borderTopLeftRadius:12}} alt="note" src={`${this.props.note.photoPath}`} onLoad = {this.onLoad}/>}
                 
