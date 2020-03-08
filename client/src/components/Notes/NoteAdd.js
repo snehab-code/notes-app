@@ -1,11 +1,15 @@
 import React from 'react'
 import NoteForm from './NoteForm'
 import {connect} from 'react-redux'
-import {startPostNote} from '../../actions/notes'
+import {startPostNote, startPostNoteWithCategory} from '../../actions/notes'
 
 function NoteAdd (props) {
-    const handleSubmit = (formData) => {
-        props.dispatch(startPostNote(formData, props.history))
+    const handleSubmit = (formData, newCategory) => {
+        if (newCategory) {
+            props.dispatch(startPostNoteWithCategory(formData, props.closeModal, newCategory))
+        } else {
+            props.dispatch(startPostNote(formData, props.closeModal))
+        }
     }
 
     return (

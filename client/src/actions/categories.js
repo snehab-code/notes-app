@@ -4,16 +4,17 @@ const setCategories = (categories) => {
     return {type: 'SET_CATEGORIES', payload: categories}
 }
 
-const addCategory = (category) => {
-    return {type: 'ADD_CATEGORIES', payload: category}
+export const addCategory = (category) => {
+    console.log(category)
+    return {type: 'ADD_CATEGORY', payload: category}
 }
 
 const removeCategory = (id) => {
-    return {type: 'REMOVE_CATEGORIES', payload: id}
+    return {type: 'REMOVE_CATEGORY', payload: id}
 }
 
 const updateCategory = (id, category) => {
-    return {type: 'UPDATE_CATEGORIES', payload: {id, category}} 
+    return {type: 'UPDATE_CATEGORY', payload: {id, category}} 
 }
 
 export const startGetCategories = (token) => {

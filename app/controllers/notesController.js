@@ -3,7 +3,7 @@ const Category = require('../models/category')
 const fs = require('fs')
 
 module.exports.list = (req, res) => {
-    Note.find({user: req.user._id}).populate('category', ['_id', 'name']).populate('photo')
+    Note.find({user: req.user._id}).populate('category', ['_id', 'name'])
         .then((notes) => {
             res.json(notes)
         })
@@ -37,13 +37,10 @@ module.exports.create = (req, res) => {
     note.user = req.user._id
     note.save()
     .then((note) => {
-        // make this a post hook eventually
+        // populating category
         Category.findOne({_id: note.category, user: req.user._id}, '_id name')
             .then(category => {
-                note.category = {
-                    _id: category._id,
-                    name: category.name
-                }
+                note.category = category
                 res.json(note)
             })
             .catch(err => {
@@ -76,7 +73,7 @@ module.exports.update = (req,res) => {
     const id = req.params.id
     if (req.file) {
         const file = req.file
-        body.photoPath = `/${file.destination}/${file.filename}`
+        body.photoPath = file.location
     }
     Note.findOneAndUpdate({_id: id, user: req.user._id}, body, {new: true, runValidators: true}).populate('category', ['_id', 'name'])
         .then((note) => {

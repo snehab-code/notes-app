@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import Modal from 'react-modal'
 import Note from './Note'
 import NoteAdd from './NoteAdd'
+import NoteEdit from './NoteEdit'
 
 // styles for Modal
 const customStyles = {
@@ -28,7 +29,9 @@ class NotesList extends React.Component{
         super()
         this.state = {
             columns: 0,
-            modalIsOpen: false
+            modalIsOpen: false,
+            action: null,
+            activeNote: null
         }
     }
 
@@ -55,7 +58,11 @@ class NotesList extends React.Component{
     }
     
     handleAdd = () => {
-        this.setState({modalIsOpen: true})
+        this.setState({modalIsOpen: true, action: 'add'})
+    }
+
+    handleEdit = (id) => {
+        this.setState({modalIsOpen: true, action: 'edit', activeNote: id})
     }
 
     render() {
@@ -67,7 +74,8 @@ class NotesList extends React.Component{
                 onRequestClose={this.closeModal}
                 contentLabel="Create note"
             >
-                <NoteAdd />
+                {this.state.action == 'add' && <NoteAdd closeModal = {this.closeModal}/>}
+                {this.state.action == 'edit' && <NoteEdit closeModal = {this.closeModal} id = {this.state.activeNote}/>}
             </Modal>
             {   this.props.pinnedNotes.length > 0 &&
             <>
@@ -79,7 +87,7 @@ class NotesList extends React.Component{
                         this.props.pinnedNotes.map(note => {
                             if (note.position%this.state.columns==1) {
                                 return (
-                                    <Note key = {note._id} id={note._id}/>
+                                    <Note key = {note._id} id={note._id} handleEdit = {this.handleEdit}/>
                                 )
                             }
                         })
@@ -92,7 +100,7 @@ class NotesList extends React.Component{
                             if (note.position%this.state.columns==2) {
                                 // only runs on three columns not 2
                                 return (
-                                    <Note key = {note._id} id={note._id}/>
+                                    <Note key = {note._id} id={note._id} handleEdit = {this.handleEdit}/>
                                 )
                             }
                         })
@@ -104,7 +112,7 @@ class NotesList extends React.Component{
                         this.props.pinnedNotes.map(note => {
                             if (note.position%this.state.columns==0) {
                                 return (
-                                    <Note key = {note._id} id={note._id}/>
+                                    <Note key = {note._id} id={note._id} handleEdit = {this.handleEdit}/>
                                 )
                             }
                         })
@@ -128,7 +136,7 @@ class NotesList extends React.Component{
                         this.props.notes.map(note => {
                             if (note.position%this.state.columns==1) {
                                 return (
-                                    <Note key = {note._id} id={note._id}/>
+                                    <Note key = {note._id} id={note._id} handleEdit = {this.handleEdit}/>
                                 )
                             }
                         })
@@ -141,7 +149,7 @@ class NotesList extends React.Component{
                             if (note.position%this.state.columns==2) {
                                 // only runs on three columns not 2
                                 return (
-                                    <Note key = {note._id} id={note._id}/>
+                                    <Note key = {note._id} id={note._id} handleEdit = {this.handleEdit}/>
                                 )
                             }
                         })
@@ -153,7 +161,7 @@ class NotesList extends React.Component{
                         this.props.notes.map(note => {
                             if (note.position%this.state.columns==0) {
                                 return (
-                                    <Note key = {note._id} id={note._id}/>
+                                    <Note key = {note._id} id={note._id} handleEdit = {this.handleEdit}/>
                                 )
                             }
                         })

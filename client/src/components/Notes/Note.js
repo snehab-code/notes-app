@@ -43,7 +43,7 @@ class Note extends React.Component{
     }
 
     handleEdit = (id) => {
-        this.props.history.push(`/notes/${id}/edit`)
+        this.props.handleEdit(id)
     }
 
     handlePin = (id, pinStatus) => {

@@ -1,4 +1,5 @@
 import axios from '../config/axios'
+import {addCategory} from './categories'
 
 const setNotes = (notes) => {
     return {type: 'SET_NOTES', payload: notes}
@@ -29,16 +30,36 @@ export const startGetNotes = () => {
     }
 }
 
-export const startPostNote = (formData, history) => {
+export const startPostNote = (formData, closeModal) => {
     return (dispatch) => {
         axios.post('/notes', formData)
             .then(response => {
                 const note = response.data
                 dispatch(addNote(note))
-                history.push('/notes')
+                closeModal()
             })
             .catch(err => {
                 console.log('startPostNote err', err)
+            })
+    }
+}
+
+export const startPostNoteWithCategory = (formData, closeModal, newCategory) => {
+    return (dispatch) => {
+        axios.post('/categories', newCategory)
+            .then(response => {
+                const category = response.data
+                formData.set('category', category._id)
+                axios.post('/notes', formData)
+                .then(response => {
+                    const note = response.data
+                    dispatch(addNote(note))
+                    dispatch(addCategory(category))
+                    closeModal()
+                })
+                .catch(err => {
+                    console.log('startPostNote err', err)
+                })
             })
     }
 }
@@ -56,17 +77,36 @@ export const startDeleteNote = (id) => {
     }
 }
 
-export const startPutNote = (id, formData, history) => {
+export const startPutNote = (id, formData, closeModal) => {
     return (dispatch) => {
         axios.put(`/notes/${id}`, formData)
             .then(response=>{
                 const note = response.data
                 const id = note._id
                 dispatch(updateNote(id, note))
-                history.push('/notes')
+                closeModal()
             })
             .catch(err => {
-                console.log(err => {
+                console.log('update note error', err)
+            })
+    }
+}
+
+export const startPutNoteWithCategory = (id, formData, closeModal, newCategory) => {
+    return (dispatch) => {
+        axios.post('/categories', newCategory)
+            .then(response => {
+                const category = response.data
+                formData.set('category', category._id)
+                axios.put(`/notes/${id}`, formData)
+                .then(response=>{
+                    const note = response.data
+                    const id = note._id
+                    dispatch(updateNote(id, note))
+                    dispatch(addCategory(category))
+                    closeModal()
+                })
+                .catch(err => {
                     console.log('update note error', err)
                 })
             })

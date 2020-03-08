@@ -1,14 +1,17 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import NoteForm from './NoteForm'
-import { startPutNote } from '../../actions/notes'
+import { startPutNote, startPutNoteWithCategory } from '../../actions/notes'
 
 // class NoteEdit extends React.Component {
 function NoteEdit(props) {
-    const handleSubmit = (formData) => {
-        const id = props.match.params.id
-        const history = props.history
-        props.dispatch(startPutNote(id, formData, history))
+    const handleSubmit = (formData, newCategory) => {
+        const id = props.id
+        if (newCategory) {
+            props.dispatch(startPutNoteWithCategory(id, formData, props.closeModal, newCategory))
+        } else {
+            props.dispatch(startPutNote(id, formData, props.closeModal))
+        }
     }
  
     return (
@@ -22,7 +25,7 @@ function NoteEdit(props) {
 
 const mapStateToProps = (state, props) => {
     return {
-        note: state.notes.find(note => note._id == props.match.params.id)
+        note: state.notes.find(note => note._id == props.id)
     }
 }
 

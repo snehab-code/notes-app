@@ -15,9 +15,8 @@ class NoteForm extends React.Component {
         this.state = {
             title: this.props.title ? this.props.title : '',
             description: this.props.description ? this.props.description : '',
-            category: this.props.category ? this.props.category._id : '',
             image: null,
-            noteCategory: null
+            noteCategory: this.props.noteCategory ? this.props.noteCategory : null
         }
     }
 
@@ -26,15 +25,18 @@ class NoteForm extends React.Component {
         const formData = {
             title: this.state.title,
             description: this.state.description,
-            category: this.state.category,
+            category: this.state.noteCategory.value
         }
         const form = new FormData()
+        form.append('image', this.state.image)
         for (let key in formData) {
             form.append(key, formData[key])
         }
-        
-        form.append('image', this.state.image)
-        this.props.handleSubmit(form)
+        if (this.state.noteCategory.__isNew__) {
+            this.props.handleSubmit(form, {name: this.state.noteCategory.value})
+        } else {
+            this.props.handleSubmit(form)
+        } 
     }
 
     handleChange = (e) => {
@@ -46,21 +48,14 @@ class NoteForm extends React.Component {
     }
 
     handleCategoryChange = (newValue) => {
-        console.log(newValue)
         if (newValue) {
             this.setState({noteCategory: newValue})
         } else {
-            this.setState({noteCategory: ''})
+            this.setState({noteCategory: null})
         }
     }
 
-    // handleInputChange = (inputValue, actionMeta) => {
-    //     console.log(inputValue)
-    //     console.log(actionMeta)
-    // }
-
     render() {
-        console.log(this.props, this.state, 'noteform')
         return (
             <form onSubmit = {this.handleSubmit} style={{display:"flex", flexDirection:"column", justifyContent:"center"}}>
                 <label htmlFor="title">title</label>
@@ -72,7 +67,6 @@ class NoteForm extends React.Component {
                     isClearable
                     onChange={this.handleCategoryChange}
                     options={this.props.creatableCategories}
-                    onInputChange = {this.handleInputChange}
                     value = {this.state.noteCategory}
                 />
                 <br/>
@@ -87,6 +81,7 @@ class NoteForm extends React.Component {
 
 const mapStateToProps = (state, props) => {
     return {
+        note: state.notes.find(note => note._id == props.id),
         categories: state.categories,
         creatableCategories: state.categories.map(category => {
             return {
