@@ -20,6 +20,14 @@ const s3 = new aws.S3()
 // });
 
 const upload = multer({
+  fileFilter: function(req, file, cb) {
+    if (file.mimetype !== 'image/png' && file.mimetype !== 'image/gif' && file.mimetype !== 'image/jpeg') 
+    {
+        return cb(null, false);
+    } else {
+        cb(null, true);
+    }
+  },
   storage: multerS3({
     s3: s3,
     bucket: process.env.AWS_BUCKET_NAME,
